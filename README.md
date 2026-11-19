@@ -4,6 +4,26 @@ OrderPortal är en desktop-app byggd med Electron för orderhantering, tidsregis
 
 Appen kopplar mot **Projektportalen** (`api-app3.projektportalen.se`). Du loggar in med ditt vanliga Projektportalen-konto, och därefter hämtas serviceordrar, kunder, tidrapporter, material och fakturor direkt därifrån. Viss testdata finns kvar i `src/mock-data.js` för utveckling.
 
+## Skärmbilder
+
+*Bilderna visar testdata, inga riktiga kunder.*
+
+**Orderlista**
+
+![Orderlista](docs/screenshots/orders.png)
+
+**Tidsregistrering**
+
+![Tidsregistrering](docs/screenshots/time.png)
+
+**Kundlista**
+
+![Kundlista](docs/screenshots/customers.png)
+
+**Inloggning**
+
+<img src="docs/screenshots/login.png" alt="Inloggning" width="600">
+
 ## Ladda ner
 
 Färdiga Windows-filer finns under [Releases](https://github.com/oscarjio/orderportal/releases/latest):
