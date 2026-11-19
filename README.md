@@ -4,6 +4,15 @@ OrderPortal är en desktop-app byggd med Electron som efterliknar gränssnittet 
 
 I nuvarande skede är projektet **UI-first**: all data som visas kommer från lokala mockar under `src/mock-data.js`. Tanken är att gränssnittet, interaktionerna och informationsarkitekturen ska sitta innan vi kopplar på ett riktigt backend-API. De API-anrop som görs från renderer-processen går redan via en stabil bridge (`window.api.*`), så övergången till skarp data ska kunna göras utan att röra vid vyerna.
 
+## Ladda ner
+
+Färdiga Windows-filer finns under [Releases](https://github.com/oscarjio/orderportal/releases/latest):
+
+- `OrderPortal-Setup-x.y.z.exe` – installationsprogram
+- `OrderPortal-Portable-x.y.z.exe` – körs direkt utan installation
+
+Filerna byggs automatiskt av GitHub Actions. Ny release skapas när en tagg som `v0.2.0` pushas (`git tag v0.2.0 && git push --tags`). Varje push till `main` bygger också, och filerna kan då hämtas som artefakt under fliken Actions.
+
 ## Funktioner
 
 - Hem-vy med dashboard och översikt över pågående arbete
