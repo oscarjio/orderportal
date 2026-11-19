@@ -1,0 +1,7 @@
+node_modules/
+dist/
+OrderPortal-win-x64/
+*.zip
+.DS_Store
+*.log
+.env

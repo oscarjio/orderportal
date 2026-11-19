@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <title>OrderPortal – Logga in</title>
+  <style>
+    :root {
+      --accent: #1bb89a;
+      --accent-dark: #149076;
+      --accent-light: #c7f0e4;
+      --dark: #1f4b47;
+      --dark-hover: #2a5f5a;
+      --pink: #f0a7a2;
+      --bg: #edf2f1;
+      --panel: #ffffff;
+      --border: #d8e0df;
+      --text: #1d2b2a;
+      --text-dim: #6a7b79;
+      --danger: #c0392b;
+      --input-bg: #f4f7f6;
+      --shadow-lg: 0 12px 32px rgba(0, 0, 0, .18);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   "Helvetica Neue", Arial, sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .login-card {
+      width: 380px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--pink);
+      border-radius: 4px;
+      box-shadow: var(--shadow-lg);
+      padding: 32px 36px 28px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .logo svg { display: block; }
+
+    h1 {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--dark);
+      margin: 0 0 20px;
+    }
+
+    form { display: flex; flex-direction: column; gap: 14px; }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      font-family: inherit;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 8px 10px;
+      outline: none;
+      transition: border-color .15s, background .15s;
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    textarea {
+      font-family: Menlo, Consolas, monospace;
+      font-size: 12px;
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .remember-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-dim);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    .remember-row input { margin: 0; accent-color: var(--accent); }
+
+    button[type="submit"] {
+      margin-top: 6px;
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid var(--accent-dark);
+      border-radius: 3px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    button[type="submit"]:hover:not(:disabled) { background: var(--accent-dark); }
+    button[type="submit"]:disabled {
+      opacity: .6;
+      cursor: progress;
+    }
+
+    .error {
+      display: none;
+      margin-top: 12px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--danger);
+      background: #fbeaea;
+      border: 1px solid #efc5c2;
+      border-radius: 3px;
+      white-space: pre-wrap;
+    }
+    .error.visible { display: block; }
+
+    .advanced {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+    }
+    .advanced summary {
+      font-size: 11px;
+      color: var(--text-dim);
+      cursor: pointer;
+      user-select: none;
+      letter-spacing: .5px;
+    }
+    .advanced summary:hover { color: var(--accent-dark); }
+    .advanced[open] summary { color: var(--dark); margin-bottom: 10px; }
+
+    .advanced .adv-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+    .advanced button {
+      background: var(--dark);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .advanced button:hover { background: var(--dark-hover); }
+
+    .footer-note {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+  <main class="login-card" role="main">
+    <div class="logo" aria-label="OrderPortal">
+      <svg width="220" height="42" viewBox="0 0 220 42" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="6" width="30" height="30" rx="4" fill="#1bb89a"/>
+        <path d="M10 21 L16 27 L26 15" stroke="#fff" stroke-width="3"
+              fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="42" y="28" font-family="-apple-system, Segoe UI, Roboto, sans-serif"
+              font-size="20" font-weight="700" fill="#1f4b47"
+              letter-spacing="1">OrderPortal</text>
+      </svg>
+    </div>
+
+    <h1>Logga in</h1>
+
+    <form id="loginForm" autocomplete="on" novalidate>
+      <label>
+        Användarnamn
+        <input type="text" name="username" id="username"
+               required autofocus autocomplete="username" />
+      </label>
+
+      <label>
+        Lösenord
+        <input type="password" name="password" id="password"
+               required autocomplete="current-password" />
+      </label>
+
+      <label>
+        Företag
+        <input type="number" name="clientId" id="clientId"
+               value="2681" required />
+        <small style="color:#6a7b79;font-size:11px;display:block;margin-top:3px;">
+          ClientId. Sparas efter första login — behöver inte anges igen.
+        </small>
+      </label>
+
+      <label class="remember-row">
+        <input type="checkbox" name="remember" id="remember" checked />
+        Kom ihåg mig
+      </label>
+
+      <button type="submit" id="submitBtn">LOGGA IN</button>
+    </form>
+
+    <div class="error" id="errorBox" role="alert"></div>
+
+    <details class="advanced">
+      <summary>Avancerat: Klistra in digestData manuellt</summary>
+      <textarea id="digestJson"
+                placeholder='{"realm":"...","nonce":"...","qop":"auth","ha1":"...","username":"..."}'></textarea>
+      <div class="adv-actions">
+        <button type="button" id="applyDigestBtn">Tillämpa</button>
+      </div>
+    </details>
+
+    <div class="footer-note">Projektportalen API &middot; HTTP Digest</div>
+  </main>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var form = document.getElementById('loginForm');
+      var usernameEl = document.getElementById('username');
+      var passwordEl = document.getElementById('password');
+      var rememberEl = document.getElementById('remember');
+      var submitBtn = document.getElementById('submitBtn');
+      var errorBox = document.getElementById('errorBox');
+      var digestJsonEl = document.getElementById('digestJson');
+      var applyDigestBtn = document.getElementById('applyDigestBtn');
+
+      function showError(msg) {
+        errorBox.textContent = msg || 'Okänt fel';
+        errorBox.classList.add('visible');
+      }
+
+      function clearError() {
+        errorBox.textContent = '';
+        errorBox.classList.remove('visible');
+      }
+
+      function setLoading(isLoading) {
+        submitBtn.disabled = isLoading;
+        submitBtn.textContent = isLoading ? 'Loggar in...' : 'LOGGA IN';
+      }
+
+      function onSuccess() {
+        try {
+          if (window.api && typeof window.api.notifyAuthSuccess === 'function') {
+            window.api.notifyAuthSuccess();
+            return;
+          }
+        } catch (e) {
+          console.warn('notifyAuthSuccess misslyckades:', e);
+        }
+        location.href = 'index.html';
+      }
+
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        clearError();
+
+        var username = (usernameEl.value || '').trim();
+        var password = passwordEl.value || '';
+        var clientIdRaw = (document.getElementById('clientId').value || '').trim();
+        var clientId = clientIdRaw ? Number(clientIdRaw) : null;
+        var remember = !!rememberEl.checked;
+
+        if (!username || !password || !clientId) {
+          showError('Ange användarnamn, lösenord och företag.');
+          return;
+        }
+
+        if (!window.api || typeof window.api.login !== 'function') {
+          showError('Login-API saknas. Preload-skriptet kan vara felkonfigurerat.');
+          return;
+        }
+
+        setLoading(true);
+
+        Promise.resolve()
+          .then(function () { return window.api.login(username, password, clientId); })
+          .then(function (result) {
+            if (result && result.ok === false) {
+              showError(result.error || 'Inloggning misslyckades.');
+              setLoading(false);
+              return;
+            }
+            onSuccess();
+          })
+          .catch(function (err) {
+            var msg = (err && (err.message || err.toString())) || 'Inloggning misslyckades.';
+            showError(msg);
+            setLoading(false);
+          });
+      });
+
+      applyDigestBtn.addEventListener('click', function () {
+        clearError();
+        var raw = (digestJsonEl.value || '').trim();
+        if (!raw) {
+          showError('Klistra in JSON-objekt med digestData först.');
+          return;
+        }
+        var parsed;
+        try {
+          parsed = JSON.parse(raw);
+        } catch (e) {
+          showError('Ogiltig JSON: ' + e.message);
+          return;
+        }
+
+        if (!window.api || typeof window.api.setDigestManually !== 'function') {
+          showError('API window.api.setDigestManually saknas.');
+          return;
+        }
+
+        setLoading(true);
+        Promise.resolve()
+          .then(function () { return window.api.setDigestManually(parsed); })
+          .then(function (result) {
+            if (result && result.ok === false) {
+              showError(result.error || 'Kunde inte tillämpa digest-data.');
+              setLoading(false);
+              return;
+            }
+            onSuccess();
+          })
+          .catch(function (err) {
+            var msg = (err && (err.message || err.toString())) || 'Kunde inte tillämpa digest-data.';
+            showError(msg);
+            setLoading(false);
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
