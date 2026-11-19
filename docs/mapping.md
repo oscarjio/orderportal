@@ -1,10 +1,10 @@
-# Entré → Projektportalen: Mappning
+# OrderPortal → Projektportalen: Mappning
 
-> **Designprincip:** UI:t följer Entrés mönster (orderlista, mini-kalender, enkla dialoger). Datan kommer från Projektportalen. Adapter-lagret i `pp-client.js` översätter mellan de två modellerna.
+> **Designprincip:** UI:t bygger på orderlista, mini-kalender och enkla dialoger. Datan kommer från Projektportalen. Adapter-lagret i `pp-client.js` översätter mellan de två modellerna.
 
 ## Tidsregistrering
 
-### Entré-dialog (vår UI-design)
+### OrderPortal-dialog
 
 Fält:
 - **Datum** (datum)
@@ -25,9 +25,9 @@ Projektportalen har **fyra sektioner** i en dialog:
 3. **Rapportera frånvaro** — rader med Frånvarotyp, Timmar, Kommentar
 4. **Rapportera material** — rader med Artikelgrupp, Material, Benämning, Antal, Enhet, Pris/enhet, Kostnad, Debiterbar
 
-### Mappning Entré → Projektportalen
+### Mappning OrderPortal → Projektportalen
 
-| Entré-fält | Projektportalen-fält | Anteckning |
+| OrderPortal-fält | Projektportalen-fält | Anteckning |
 |---|---|---|
 | Datum | `Timestamp` / `Date` | YYYY-MM-DD |
 | Anställd | `UserId` | Inloggad användare |
@@ -74,7 +74,7 @@ async createTimeEntry({
       Timestamp: datum + 'T00:00:00',
       Quantity: antal,
       Comment: text || '',
-      TimeTypeId: this._mapEntréTidkod(code),
+      TimeTypeId: this._mapTidkod(code),
       IsInvoiceAble: true
     }});
   }
@@ -97,7 +97,7 @@ async createTimeEntry({
 
 ## Order (serviceorder)
 
-### Entré-dialog (vår UI)
+### OrderPortal-dialog
 
 - **Projekt** (autocomplete mot projektnummer)
 - **Kundnummer** *
@@ -111,7 +111,7 @@ Projektportalen har INTE en enkel "Ny order"-dialog — där skapas serviceordra
 
 ### Mappning
 
-| Entré-fält | Projektportalen-fält |
+| OrderPortal-fält | Projektportalen-fält |
 |---|---|
 | Projekt (nummer) | `ParentProjectId` |
 | Kundnummer | `CustomerId` (slå upp via `/customers-paging` med keyword) |

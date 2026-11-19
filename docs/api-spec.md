@@ -254,7 +254,7 @@ window.api.time.getWeek({userId, startDate, endDate})
 ```
 
 ### Fas 3 — Koppla om renderer
-- Orderlista (Entré-kopia) → Serviceorder från Projektportalen. Mappa kolumner: `Nummer`→`Ordernummer`, `Kund`→`Kundens namn`, `Projektnamn`→`Beskrivning`, `Projektledare`→`Vår referens`, `Debiteringsform`+`Status`→`Status-pill`.
+- Orderlista → Serviceorder från Projektportalen. Mappa kolumner: `Nummer`→`Ordernummer`, `Kund`→`Kundens namn`, `Projektnamn`→`Beskrivning`, `Projektledare`→`Vår referens`, `Debiteringsform`+`Status`→`Status-pill`.
 - Kundlistan → `/customers-paging/`
 - Tidsregistrering → `/time-manage/materials/`
 

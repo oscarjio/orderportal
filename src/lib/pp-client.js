@@ -562,7 +562,7 @@ class ProjektportalenClient {
   }
 
   /**
-   * Skapar ny service-order ("Ny order" i Entré-stil).
+   * Skapar ny service-order ("Ny order").
    * UI-fält: Projekt, Kundnummer, Ordertyp, Leveransadress, Beskrivning.
    *
    * @param {Object} args
@@ -1213,7 +1213,7 @@ class ProjektportalenClient {
   /**
    * Hämta material registrerade på en specifik order/projekt.
    *
-   * VERIFIERAT via Chrome XHR-capture: Entré/Projektportalen använder
+   * VERIFIERAT via Chrome XHR-capture: Projektportalen använder
    *   POST /api/projects/reported-user-materials
    * med ag-grid-body och ProjectId som sträng. Tidigare varianter (GET
    * /{id}/tasks-deviations/materials + GET /projects/material) returnerar
@@ -1275,7 +1275,7 @@ class ProjektportalenClient {
   /**
    * Hämta tidrader registrerade på en specifik order/projekt.
    *
-   * VERIFIERAT via Chrome-capture: webb-Entré använder
+   * VERIFIERAT via Chrome-capture: webbappen använder
    *   POST /api/projects/reported-user-times
    * med ag-grid-body (identiskt format som reported-user-materials).
    * Varje rad har UserName, Quantity, ReportDate, TaskName, TimeTypeId,

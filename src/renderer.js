@@ -2013,7 +2013,7 @@
   }
 
   // ============================================================
-  //  KUNDORDER-AUTOCOMPLETE (Entré-stil)
+  //  KUNDORDER-AUTOCOMPLETE
   //  Visar Nummer – Märkning – Kund i dropdown.
   //  Under fältet visas vald märkning när användare valt en order.
   // ============================================================

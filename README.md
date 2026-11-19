@@ -1,6 +1,6 @@
 # OrderPortal
 
-OrderPortal är en desktop-app byggd med Electron som efterliknar gränssnittet och flödet i Entré Portal — ett affärssystem som är vanligt förekommande inom den svenska hantverks- och elbranschen. Syftet är att erbjuda en välbekant arbetsyta för orderhantering, tidsregistrering och kunduppföljning, men i en modern och plattformsoberoende skrivbordsapplikation.
+OrderPortal är en desktop-app byggd med Electron för orderhantering, tidsregistrering och kunduppföljning inom hantverks- och elbranschen. Syftet är att erbjuda en enkel och välbekant arbetsyta i en modern och plattformsoberoende skrivbordsapplikation.
 
 Appen kopplar mot **Projektportalen** (`api-app3.projektportalen.se`). Du loggar in med ditt vanliga Projektportalen-konto, och därefter hämtas serviceordrar, kunder, tidrapporter, material och fakturor direkt därifrån. Viss testdata finns kvar i `src/mock-data.js` för utveckling.
 
@@ -74,9 +74,7 @@ Vid start visas `src/login.html` om ingen sparad session finns. Inloggningen ske
 
 ## Designanteckningar
 
-Färgpaletten är vald för att ligga nära det intryck Entré Portal ger: en dämpad blågrå bakgrund, en tydlig primärblå accent för knappar och aktiva tillstånd samt en neutral typografi som ska kännas igen av befolkningen på byggarbetsplatsen. Layouten följer samma grova indelning med sidomeny till vänster, topprad med kontext-knappar och en central arbetsyta.
-
-Inspirationen är medveten, men det är värt att notera att frågan om upphovsrätt och varumärke kan bli aktuell om appen når en bredare publik. Tills vidare är projektet ett internt utforskande av UX:en, och inga logotyper eller texter från Entré är kopierade rakt av. Om produkten växer vidare bör vi göra en grundligare juridisk genomgång.
+Färgpaletten består av en dämpad blågrå bakgrund, en tydlig primärblå accent för knappar och aktiva tillstånd samt en neutral typografi som ska kännas bekant för den som arbetar ute på jobb. Layouten är indelad i sidomeny till vänster, topprad med kontext-knappar och en central arbetsyta.
 
 ## Tangentbordsgenvägar
 

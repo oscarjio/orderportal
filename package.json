@@ -1,7 +1,7 @@
 {
   "name": "orderportal",
   "version": "0.1.0",
-  "description": "Desktop order management app (Entré-inspired) built with Electron",
+  "description": "Desktop order management app built with Electron",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
