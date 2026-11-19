@@ -11,7 +11,7 @@ Färdiga Windows-filer finns under [Releases](https://github.com/oscarjio/orderp
 - `OrderPortal-Setup-x.y.z.exe` – installationsprogram
 - `OrderPortal-Portable-x.y.z.exe` – körs direkt utan installation
 
-Filerna byggs automatiskt av GitHub Actions. Ny release skapas när en tagg som `v0.2.0` pushas (`git tag v0.2.0 && git push --tags`). Varje push till `main` bygger också, och filerna kan då hämtas som artefakt under fliken Actions.
+Filerna byggs automatiskt av GitHub Actions. Ny release skapas när en release publiceras på GitHub (Releases → Draft a new release) eller när en tagg som `v0.2.0` pushas. Varje push till `main` bygger också, och filerna kan då hämtas som artefakt under fliken Actions.
 
 ## Funktioner
 
