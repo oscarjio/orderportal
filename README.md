@@ -2,7 +2,7 @@
 
 OrderPortal är en desktop-app byggd med Electron som efterliknar gränssnittet och flödet i Entré Portal — ett affärssystem som är vanligt förekommande inom den svenska hantverks- och elbranschen. Syftet är att erbjuda en välbekant arbetsyta för orderhantering, tidsregistrering och kunduppföljning, men i en modern och plattformsoberoende skrivbordsapplikation.
 
-I nuvarande skede är projektet **UI-first**: all data som visas kommer från lokala mockar under `src/mock-data.js`. Tanken är att gränssnittet, interaktionerna och informationsarkitekturen ska sitta innan vi kopplar på ett riktigt backend-API. De API-anrop som görs från renderer-processen går redan via en stabil bridge (`window.api.*`), så övergången till skarp data ska kunna göras utan att röra vid vyerna.
+Appen kopplar mot **Projektportalen** (`api-app3.projektportalen.se`). Du loggar in med ditt vanliga Projektportalen-konto, och därefter hämtas serviceordrar, kunder, tidrapporter, material och fakturor direkt därifrån. Viss testdata finns kvar i `src/mock-data.js` för utveckling.
 
 ## Ladda ner
 
@@ -57,43 +57,20 @@ orderportal/
 │   ├── index.html        # Applikationsfönstrets markup
 │   ├── styles.css        # Stilar (färger, layout, komponenter)
 │   ├── renderer.js       # Vy-logik och routing
-│   └── mock-data.js      # Temporär mock-data för utveckling
+│   ├── login.html        # Inloggningsfönster
+│   ├── mock-data.js      # Testdata för utveckling
+│   └── lib/              # Projektportalen-klient, digest-auth och lagring av session
 └── dist/                 # Byggda paket (genereras av electron-builder)
 ```
 
-## Koppla in ett riktigt API
+## Inloggning och säkerhet
 
-All kommunikation mellan renderer-processen och omvärlden går via den bridge som exponeras i `preload.js`. Där definieras `window.api.orders.*`, `window.api.customers.*` och `window.api.time.*` som idag returnerar mockdata. När det skarpa API:et är på plats är det här man byter ut implementationen — vyerna behöver inte röras.
+Vid start visas `src/login.html` om ingen sparad session finns. Inloggningen sker med **HTTP Digest-autentisering** mot Projektportalen (se `src/lib/digest-auth.js` och `docs/api-spec.md`).
 
-Som exempel, en stub för att hämta orderlistan ser idag ut ungefär så här i `preload.js`:
-
-```js
-const { contextBridge } = require('electron');
-const mock = require('./src/mock-data');
-
-contextBridge.exposeInMainWorld('api', {
-  orders: {
-    list: async () => mock.orders,
-    // ...
-  },
-});
-```
-
-För att peka den mot ett riktigt API byter man ut mock-anropet mot ett `fetch` (eller motsvarande) och returnerar det parsade svaret.
-
-```js
-orders: {
-  list: async () => {
-    const res = await fetch('https://api.example.se/v1/orders', {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    if (!res.ok) throw new Error(`Orders list failed: ${res.status}`);
-    return res.json();
-  },
-},
-```
-
-Eftersom renderer-processen redan anropar `window.api.orders.list()` i dag, räcker det att ändra implementationen i preload — vyerna i `renderer.js` fortsätter att fungera utan ändringar.
+- Lösenordet sparas inte på disk. Det som sparas är den beräknade digest-hashen (HA1) tillsammans med användarnamn och klient-id.
+- Sessionen sparas i `digest-auth.json` i appens användarmapp (`%APPDATA%\OrderPortal` på Windows) och krypteras med Electrons `safeStorage` (Windows DPAPI), så filen bara kan läsas av ditt Windows-konto.
+- Vid omstart återställs sessionen automatiskt. Utloggning raderar den sparade filen.
+- All kommunikation går via main-processen (`src/lib/pp-client.js`); renderer-fönstret når bara de funktioner som exponeras i `preload.js`.
 
 ## Designanteckningar
 
@@ -107,4 +84,4 @@ Esc stänger den öppna modalen utan att spara. Ctrl+S (Windows/Linux) respektiv
 
 ## Known limitations
 
-All data är mockad och försvinner vid omstart — ingenting persistas till disk eller backend ännu. Det finns ingen autentisering, ingen offline-hantering och ingen felhantering utöver det mest grundläggande. Språket är för närvarande hårdkodat till svenska, och tillgänglighet (tangentbordsnavigering bortom genvägarna, skärmläsarstöd, kontrast) är inte granskad. Tester saknas, och automatiska uppdateringar via electron-updater är inte konfigurerade.
+Det finns ingen offline-hantering och ingen felhantering utöver det mest grundläggande. Språket är för närvarande hårdkodat till svenska, och tillgänglighet (tangentbordsnavigering bortom genvägarna, skärmläsarstöd, kontrast) är inte granskad. Tester saknas, och automatiska uppdateringar via electron-updater är inte konfigurerade.
